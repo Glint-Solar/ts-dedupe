@@ -1,10 +1,18 @@
 import chalk from 'chalk';
-import { Project, Node, InterfaceDeclaration, TypeAliasDeclaration, SourceFile, SyntaxKind } from 'ts-morph';
+import {
+  Project,
+  Node,
+  InterfaceDeclaration,
+  TypeAliasDeclaration,
+  EnumDeclaration,
+  SourceFile,
+  SyntaxKind,
+} from 'ts-morph';
 import { isDefined, nodesIdentical } from './helpers';
 import { relative } from 'path';
 import { IDeDupeOptions } from './contracts';
 
-type DedupeTarget = InterfaceDeclaration | TypeAliasDeclaration;
+type DedupeTarget = InterfaceDeclaration | TypeAliasDeclaration | EnumDeclaration;
 type MatchingNodesLookup = Map<Node, DedupeTarget[]>;
 type NodeLookup = Record<string, MatchingNodesLookup | undefined>;
 
@@ -232,7 +240,7 @@ function buildNodeLookup(files: SourceFile[], options: IDeDupeOptions): NodeLook
             return;
         }
 
-        if (Node.isInterfaceDeclaration(node) || Node.isTypeAliasDeclaration(node)) {
+        if (Node.isInterfaceDeclaration(node) || Node.isTypeAliasDeclaration(node) || Node.isEnumDeclaration(node)) {
             addToLookup(node);
         }
 

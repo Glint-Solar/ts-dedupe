@@ -3,6 +3,9 @@
 
 A cli tool to move duplicated types and interfaces to a single file.
 
+## Fork Info
+
+This fork adds support for deduping enums
 
 ## Features
 
